@@ -1,0 +1,143 @@
+import { useState } from 'react'
+import { Button } from "/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "/components/ui/card"
+import { ArrowLeft, Gamepad } from 'lucide-react'
+
+// Sample blog post data with full content
+const blogPosts = [
+  {
+    id: 1,
+    title: "Clash of Clans: A Comprehensive Guide",
+    excerpt: "Learn everything you need to know about Clash of Clans",
+    date: "2023-06-01",
+    readTime: "5 min read",
+    content: "Clash of Clans is a popular strategy game developed by Supercell. Here's a comprehensive guide to help you get started:\n\n1. **Base Layout**: Plan your base layout carefully to maximize defense and resource production.\n2. **Troops and Spells**: Master the use of different troops and spells to effectively attack and defend.\n3. **Resource Management**: Efficiently manage your resources (elixir, dark elixir, gold) to build and upgrade your base.\n4. **Alliances**: Join or create an alliance to gain support and participate in clan wars.\n5. **Clan Wars**: Participate in clan wars to earn rewards and improve your clan's standing.\n\nClash of Clans offers endless strategic possibilities and is a must-play for strategy game enthusiasts.",
+  },
+  {
+    id: 2,
+    title: "Clash Royale: Tips and Tricks",
+    excerpt: "Discover tips and tricks to improve your gameplay in Clash Royale",
+    date: "2023-06-05",
+    readTime: "4 min read",
+    content: "Clash Royale is a fast-paced card game developed by Supercell. Here are some tips and tricks to improve your gameplay:\n\n1. **Deck Composition**: Build a balanced deck with a mix of troops, spells, and structures.\n2. **Card Levels**: Upgrade your cards to increase their power and effectiveness.\n3. **Elixir Management**: Manage your elixir efficiently to play the right cards at the right time.\n4. **Opponent Analysis**: Watch your opponent's deck and adjust your strategy accordingly.\n5. **Trophies**: Aim to earn as many trophies as possible to unlock new cards and rewards.\n\nBy following these tips, you can become a better player in Clash Royale.",
+  },
+  {
+    id: 3,
+    title: "Boom Beach: Strategies for Success",
+    excerpt: "Learn strategies to dominate in Boom Beach",
+    date: "2023-06-10",
+    readTime: "6 min read",
+    content: "Boom Beach is a strategic game developed by Supercell where you defend your beach from enemy attacks. Here are some strategies to help you succeed:\n\n1. **Base Layout**: Design your base layout to maximize defense and resource production.\n2. **Troops and Spells**: Master the use of different troops and spells to effectively attack and defend.\n3. **Resource Management**: Efficiently manage your resources (gold, diamonds) to build and upgrade your base.\n4. **Alliances**: Join or create an alliance to gain support and participate in clan wars.\n5. **Clan Wars**: Participate in clan wars to earn rewards and improve your clan's standing.\n\nBoom Beach offers endless strategic possibilities and is a must-play for strategy game enthusiasts.",
+  },
+  {
+    id: 4,
+    title: "Brawl Stars: Tips for Winning",
+    excerpt: "Discover tips to win in Brawl Stars",
+    date: "2023-06-15",
+    readTime: "7 min read",
+    content: "Brawl Stars is a fast-paced battle royale game developed by Supercell. Here are some tips to help you win:\n\n1. **Character Selection**: Choose characters that complement your playstyle and the map.\n2. **Map Awareness**: Be aware of the map layout and key points like power-ups and exits.\n3. **Teamwork**: Coordinate with your team to take down opponents and secure power-ups.\n4. **Power-Ups**: Use power-ups strategically to gain an advantage.\n5. **Practice Regularly**: Consistent practice is essential for improving your skills.\n\nBy following these tips, you can become a better player in Brawl Stars.",
+  },
+  {
+    id: 5,
+    title: "Hay Day: Farming Tips and Tricks",
+    excerpt: "Learn tips and tricks to improve your farming in Hay Day",
+    date: "2023-06-20",
+    readTime: "5 min read",
+    content: "Hay Day is a farming simulation game developed by Supercell. Here are some tips and tricks to improve your farming:\n\n1. **Planting and Harvesting**: Plant crops and harvest them at the right time to maximize yield.\n2. **Animal Care**: Take care of your animals to ensure they produce resources efficiently.\n3. **Upgrades**: Upgrade your farm buildings and tools to increase production and efficiency.\n4. **Events**: Participate in events to earn rewards and special items.\n5. **Trading**: Trade resources with other players to get what you need.\n\nHay Day offers a relaxing and rewarding farming experience and is a great choice for casual gamers.",
+  },
+]
+
+export default function SupercellGameBlog() {
+  const [selectedPost, setSelectedPost] = useState<number | null>(null)
+
+  const handlePostClick = (postId: number) => {
+    setSelectedPost(postId)
+  }
+
+  const handleBackClick = () => {
+    setSelectedPost(null)
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-white">
+      {/* Header */}
+      <header className="bg-green-600 text-white shadow-lg">
+        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+          <h1 className="text-3xl font-bold flex items-center">
+            <Gamepad className="mr-2 h-6 w-6" /> Supercell Game Blog
+          </h1>
+          <nav>
+            <ul className="flex space-x-4">
+              <li><a href="#" className="hover:underline">Home</a></li>
+              <li><a href="#" className="hover:underline">About</a></li>
+              <li><a href="#" className="hover:underline">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="flex-grow container mx-auto px-4 py-8">
+        {selectedPost !== null ? (
+          <div>
+            <Button
+              variant="outline"
+              onClick={handleBackClick}
+              className="mb-4"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to all posts
+            </Button>
+            <h2 className="text-4xl font-bold mb-2">{blogPosts[selectedPost - 1].title}</h2>
+            <p className="text-gray-500 mb-4 text-lg">
+              {blogPosts[selectedPost - 1].date} · {blogPosts[selectedPost - 1].readTime}
+            </p>
+            <div className="prose max-w-none">
+              {blogPosts[selectedPost - 1].content.split('\n').map((paragraph, index) => (
+                <p key={index} className="mb-4 text-lg text-gray-800">{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            <h2 className="text-4xl font-bold mb-6">Latest Posts</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {blogPosts.map((post) => (
+                <Card key={post.id} onClick={() => handlePostClick(post.id)} className="cursor-pointer hover:shadow-lg transition-shadow duration-300">
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-bold">{post.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-600 text-lg">{post.excerpt}</p>
+                  </CardContent>
+                  <CardFooter className="flex justify-between items-center">
+                    <div className="text-sm text-gray-500">
+                      {post.date} · {post.readTime}
+                    </div>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </>
+        )}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-100 mt-8">
+        <div className="container mx-auto px-4 py-6 text-center">
+          <p>&copy; 2023 Supercell Game Blog. All rights reserved.</p>
+          <div className="mt-2">
+            <a href="#" className="text-sm text-gray-500 hover:underline mr-4">Privacy Policy</a>
+            <a href="#" className="text-sm text-gray-500 hover:underline">Terms of Service</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
